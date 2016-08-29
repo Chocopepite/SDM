@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html ng-app="SDM">
+  <head>
+    
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<title>Sueur de Metal</title>
+			
+		<!-- Styles -->
+		<link rel="stylesheet" href="css/framework7.material.min.css">
+		<link rel="stylesheet" href="css/framework7.indexed-list.min.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css" />	
+		<link rel="stylesheet" href="css/main.css?v=7">
+		
+
+		<!-- Scripts -->
+		<script type="text/javascript" src="js/angular.min.js"></script>
+		<script type="text/javascript" src="js/framework7.min.js"></script>
+		<script type="text/javascript" src="js/framework7.indexed-list.min.js"></script>
+		<script type="text/javascript" src="js/config.js"></script>
+		<!--<script type="text/javascript" src="js/service/InitService.js"></script>   
+		<script type="text/javascript" src="js/service/DataService.js"></script>-->
+		<script type="text/javascript" src="js/service/Services.min.js"></script>
+
+		<script type="text/javascript" src="js/controller/IndexPageController.js"></script>
+		<script type="text/javascript" src="js/controller/ListeGroupeController.js"></script>
+		<script type="text/javascript" src="js/controller/ListeDateController.js"></script>
+		<script type="text/javascript" src="js/controller/CalendarController.js"></script>       
+		<script type="text/javascript" src="js/controller/DetailPageController.js"></script>
+		<script type="text/javascript" src="js/controller/DepartementController.js"></script>
+		<script type="text/javascript" src="js/controller/TabController.js"></script>
+		<script type="text/javascript" src="js/controller/HomeController.js"></script> 
+		<script type="text/javascript" src="js/controller/PartenairesController.js"></script> 
+		<script type="text/javascript" src="js/controller/UneController.js"></script> 
+		<script type="text/javascript" src="js/controller/FAQController.js"></script> 
+		<script type="text/javascript" src="js/controller/GroupeAlphaController.js"></script>	
+	  <!--<script type="text/javascript" src="js/controller/Controllers.min.js"></script>-->
+
+		<script type="text/javascript" src="cordova.js"></script>	
+	
+  </head>
+  
+  <body class="theme-gray">
+    <div class="statusbar-overlay"></div>
+    <div class="panel-overlay"></div>
+    <div class="views">
+	
+    <div class="view view-main">
+		
+	  <!-- BARRE FOOTER BOUTONS FILTRE -->
+    <div class="toolbar toolbar-bottom" ng-controller="TabController" id="TabController" ng-show="homevar() === 1">
+			<div class="toolbar-inner">
+				<a href="#" ng-click="ShowFav()"  ng-class="{active : buttonFav()}" class="link">
+					<i class="icon fa fa-star-o fa-2x fa-flip-vertical"></i><i class="icon icon-invisible ">
+						<span class="badge bg-green" ng-hide="CountFav() == 0 || CountFav() == null">{{CountFav()}}</span>
+					</i>
+				</a>
+				<a href="#" class="link" ng-click="ShowSearch()" ng-class="{active : buttonSearch()}">
+					<i class="icon fa fa-search fa-2x"></i>
+				</a>
+				<a href="#" class="link" ng-click="ShowNew()" ng-class="{active : buttonNew()}">
+					<i class="icon fa fa-exclamation-circle fa-2x">
+						<span class="badge bg-red" ng-hide="CountNew() == 0 || CountNew() == null">{{CountNew()}}</span>
+					</i>
+				</a>
+				<a href="#Departement" class="link" ng-click="ClickDep()" ng-class="{active : buttonDep()}">
+					<i class="icon fa fa-sliders fa-2x"></i>
+				</a>				
+			</div>
+		</div> <!-- FIN BARRE FOOTER BOUTONS FILTRE -->
+		
+        
+<!-- Pages -->
+<div class="pages navbar-fixed">	
+
+
+		<!-- Page HOME -->
+    <div data-page="Home" class="page no-toolbar" ng-controller="HomeController" id="HomeController">	
+		  
+		     <!-- Navbar -->
+			 <div class="navbar">
+				  <div class="navbar-inner">								  
+					<img src='img/texture4.png' style='max-width:100%; height:auto; margin-left: auto; margin-right: auto;'/>
+				  </div>				  
+			  </div> 		
+			  
+			  <!-- Page content-->
+            <div class="page-content" id="home" ng-show="preload() === 1" >	
+				
+					
+				<div class="row no-gutter">					
+					 <div class="col-auto">					 
+						 <a href='#' ng-click='Home()'>
+							 <div class="button-home button button-raised">
+								<i class="icon fa fa-bars fa-3x"></i><br/>		 
+								<span class='capitalize'>C</span>oncerts
+								<br/>
+							</div>			
+						</a>
+					</div>
+					
+					<div class="col-auto">
+					 <a href='#' ng-click="HomeUne()" >
+						<div class="button-home button button-raised">
+								<i class="icon fa fa-flag-o fa-3x"></i><br/>					 
+								<span class='capitalize'>C</span>oncerts à la <span class='capitalize'>U</span>ne
+								<br/>
+							</div>
+						</a>
+					</div>
+					
+					 			
+				</div>
+				
+				<div class="row no-gutter">					
+					 <div class="col-auto">
+						 <a href='#' ng-click='HomeFav()'> 
+							<div class="button-home button button-raised">
+								<i class="icon fa fa-star-o fa-3x fa-flip-vertical"></i><br/><span class="badge bg-green badgehome" ng-hide="CountFav() == 0 || CountFav() == null">{{CountFav()}}</span>			 
+								<span class='capitalize'>F</span>avoris
+								<br/>
+							</div>
+						</a>
+					</div>
+					  <div class="col-auto">
+					 	<a href='#' ng-click='HomeNew()'>
+						<div class="button-home button button-raised">
+								<i class="icon fa fa-exclamation-circle fa-3x"></i><br/><span class="badge bg-red badgehome"ng-hide="CountNew() == 0 || CountNew() == null">{{CountNew()}}</span> <span class='capitalize'>N</span>ouveautés
+							</div>
+						</a>
+					</div>				
+				</div>
+				
+				<div class="row no-gutter">						
+					  <div class="col-auto">
+						 <!--<a href='#ListeGroupes' ng-click='HomeGroupes()'> -->
+						 <a href='#' ng-click='HomeListeGroupes()'> 
+							<div class="button-home button button-raised">
+								<i class="icon fa fa-star-o fa-3x fa-list"></i><br/>				 
+								<span class='capitalize'>G</span>roupes
+								<br/>
+							</div>
+						</a>
+					</div>
+					
+					<div class="col-auto">
+					 	<a href='#' ng-click='Dep()'>
+						 <div class="button-home button button-raised">
+								<i class="icon fa fa-sliders fa-3x"></i><br/><span class='capitalize'>R</span>églages
+						</div>
+						</a>
+					</div>	
+							
+				</div>				
+				
+				<div class="row no-gutter">	
+				
+					<div class="col-auto">
+					 	<a href='#' ng-click='HomeSearch()'>
+						<div class="button-home button button-raised">
+								<i class="icon fa fa-search fa-3x"></i><br/><span class='capitalize'>R</span>echerche
+							</div>
+						</a>
+					</div>
+					
+					
+					  <div class="col-auto">
+					 	<a href='#' ng-click='HomeCalendar()'>
+						<div class="button-home button button-raised">
+								<i class="icon fa fa-calendar fa-3x"></i><br/><span class='capitalize'>C</span>alendrier
+							</div>
+						</a>
+					</div>				
+				</div>
+				
+				<div class="row no-gutter">	
+					<div class="col-auto">
+					 <a href='#' ng-click="HomeFAQ()" >
+						<div class="button-home button button-raised">
+								<i class="icon fa fa-question fa-3x"></i><br/>					 
+								<span class='capitalize'>FAQ</span>
+								<br/>
+							</div>
+						</a>
+					</div>
+					
+					  <div class="col-auto">
+					 	<a href='#' ng-click='HomePartenaires()'>
+						<div class="button-home button button-raised">
+								<i class="icon fa fa-users fa-3x"></i><br/><span class='capitalize'>N</span>os partenaires
+							</div>
+						</a>
+					</div>				
+				</div>
+								
+				<div class="row no-gutter" style="margin-bottom:5px;">	
+					<div class="col-auto">
+						<div class="button-home button button-raised button-text">
+							<span ng-hide="CountConcert() == null"><span class="badge bg-cadetblue badgehome" >{{CountConcert()}}</span> concerts dans toute la <span class='capitalize'>F</span>rance.<br/></span>
+							<span ng-hide="Info() == '' "><span class="badge bg-cadetblue badgehome" >{{CountFiltre()}}</span> concerts dans votre {{Info()}}.</span>
+						</div>
+					</div>
+				</div>	
+				<!-- Margin BOTTOM-->
+				<!--<div class="content-block" style='margin-bottom:5px;'>
+					<p></p>
+				</div>-->
+				
+			 </div>
+				
+	  </div> 	<!-- FIN Page HOME -->
+				  
+		  	
+		<!-- Page Liste Event -->
+		<div data-page="index" class="page cached" ng-controller="IndexPageController"  id="IndexPage">	
+		  
+		     <!-- Navbar -->
+				<div class="navbar">
+					<div class="navbar-inner">
+						<div class="left"><a href="#" class="link icon-only" ng-click="Reset()"><i class="fa fa-home"></i></a></div>	
+						<div class="center">{{TITRE()}} {{InfoDep()}}</div>
+					</div>				  
+				</div> 
+			  
+			  <!-- Search Bar -->
+				<form class="searchbar" ng-show="showSearch() == '1'">
+					<div class="searchbar-input">
+						<input type="search" placeholder="Recherche" ng-model="search" ng-model-options="{debounce: 450}">
+						<a href="#" class="searchbar-clear"></a>
+					</div>
+					<a href="#" class="searchbar-cancel">Cancel</a>
+				</form>
+			 
+				<!-- Search Bar overlay-->
+				<div class="searchbar-overlay"></div>
+			 
+				<!-- Page content-->
+				<div class="page-content" scroll-position>	
+				
+					<div ng-show="filtreNew() != '1' && filtreFav() != '1' && filtreRegion() != '1'">
+						<div class="content-block inset">
+						  <div class="content-block-inner" ng-click='GotoDep();'>
+							<p>Filtrez les concerts par département ou par région en cliquant sur l'icone <i class="icon fa fa-sliders"></i></p>
+						  </div>
+						</div>						
+					</div>
+				
+					<!-- REPEAT LIST EVENT -->										
+					<div class="card facebook-card"  ng-repeat="concert in filteritem = (concerts  | Filtre:Localisation() | limitTo:display_limit() |  custom:search | customfav:filtreFav() | customnew:filtreNew()  | customTime:DateNow) ">
+						
+					 	<div class="card-header">
+							<a href="#detailsPage" ng-click="onItemClicked(concert)">
+							<div class="row no-gutter">							
+								<div class="col-90">
+									<div class="facebook-name" ng-show="concert.IsFestivalConcert == '0'">{{concert.groupe_1}}
+										<span ng-show="IsNew(concert.id)">
+											<span class="badge bg-red">NOUVEAU</span>
+										</span>
+										<div class="GroupeStyle" ng-show="concert.style_1 != ''">
+											({{concert.style_1}})
+										</div>
+									</div>
+									<div class="facebook-name" ng-show="concert.IsFestivalConcert == '1'">Festival {{concert.NomFestivalConcert}}
+										<span ng-show="IsNew(concert.id)">
+											<span class="badge bg-red">NOUVEAU</span>
+										</span>
+									</div>									
+									<div class="facebook-date">
+										{{concert.date}} - {{concert.ville}} ({{concert.departement}})
+									</div>
+								</div>
+								<div class="col-10 align-right">
+									<span ng-click="$event.preventDefault(); $event.stopPropagation();AddFav(concert.id)" ng-show="!IsFav(concert.id)">
+										<i class="fa fa-star-o fa-lg fa-flip-vertical" eat-click></i>
+									</span>							
+									<span ng-click="$event.preventDefault(); $event.stopPropagation(); DeleteFav(concert.id)" ng-show="IsFav(concert.id)">
+									<i class="fa fa-star fa-lg fa-flip-vertical" style="color: #FF0000;"></i>
+									</span>
+								</div>
+							</div>	
+							</a>
+						</div>						 
+					
+						<div class="card-content" >
+							<a href="#detailsPage" ng-click="onItemClicked(concert)">
+							<div class="card-content-inner" ng-hide="concert.groupe_2 == '' || concert.IsFestivalConcert == '1'">
+							  <p ng-hide="concert.groupe_2 == ''">- {{concert.groupe_2}} <span class='GroupeStyle' ng-show="concert.style_2 != ''">({{concert.style_2}})</span></p>						 
+							  <p ng-hide="concert.groupe_3 == ''">- {{concert.groupe_3}} <span class='GroupeStyle' ng-show="concert.style_3 != ''">({{concert.style_3}})</span></p>						 
+							  <p ng-hide="concert.groupe_4 == ''">- {{concert.groupe_4}} <span class='GroupeStyle' ng-show="concert.style_4 != ''">({{concert.style_4}})</span></p>							   	
+							  <p ng-hide="concert.groupe_5 == ''">- {{concert.groupe_5}} <span class='GroupeStyle' ng-show="concert.style_5 != ''">({{concert.style_5}})</span></p>							   	
+							</div>
+							<div class="card-content-inner" ng-show="concert.IsFestivalConcert == '1'">
+							  <p ng-hide="concert.groupe_1 == ''">- {{concert.groupe_1}} <span class='GroupeStyle' ng-show="concert.style_1 != ''">({{concert.style_1}})</span></p>						 
+							  <p ng-hide="concert.groupe_2 == ''">- {{concert.groupe_2}} <span class='GroupeStyle' ng-show="concert.style_2 != ''">({{concert.style_2}})</span></p>						 
+							  <p ng-hide="concert.groupe_3 == ''">- {{concert.groupe_3}} <span class='GroupeStyle' ng-show="concert.style_3 != ''">({{concert.style_3}})</span></p>						 
+							  <p ng-hide="concert.groupe_4 == ''">- {{concert.groupe_4}} <span class='GroupeStyle' ng-show="concert.style_4 != ''">({{concert.style_4}})</span></p>							   	
+							  <p ng-hide="concert.groupe_5 == ''">- {{concert.groupe_5}} <span class='GroupeStyle' ng-show="concert.style_5 != ''">({{concert.style_5}})</span></p>							   	
+							</div>		
+						
+						</div>		
+						
+					  <div class="card-footer" ng-show="concert.etat != 0 || concert.IsPartenaire == 1">
+						<span ng-show="concert.etat == 2"><span class="badge bg-red">CONCERT ANNUL&Eacute;</span></span>
+						<span ng-show="concert.etat == 1"><span class="badge bg-red">CONCERT COMPLET</span></span>
+						<span ng-show="concert.etat == 0"></span>
+						<span ng-show="concert.IsPartenaire == 1"><i class="fa fa-flag-o" aria-hidden="true"></i> Concert Partenaire</span>
+					  </div>
+					  
+						</a>
+					</div>	
+					
+					<!-- Recherche nulle -->
+					<div ng-show="SearchNull === 1 && showSearch() === '1'" id='searchnull' class="content-block" style='margin-bottom:60px;'>
+						<div class="content-block inset">
+						  <div class="content-block-inner">
+							<p>Aucun concert ne correspond à votre recherche.</p>
+						  </div>
+						</div>						
+					</div>
+					
+					<!-- Dep Nul  --> 
+					<div ng-show="SearchNull === 1 && DepNull === 0 && showSearch() != '1' && filtreFav() != '1'" id='searchnull' class="content-block" style='margin-bottom:60px;'>
+						<div class="content-block inset">
+						  <div class="content-block-inner">
+							<p>Aucun concert n'est répertorié dans votre {{Info()}}.</p>
+						  </div>
+						</div>						
+					</div>
+					
+					<!-- Dep Nul -->
+					<div ng-show="DepNull === 1 && filtreFav() != '1' && showSearch() != '1' && filtreNew() != '1'"  id='searchnull' class="content-block" style='margin-bottom:60px;'>
+						<div class="content-block inset">
+						  <div class="content-block-inner">
+							<p>Aucun concert n'est répertorié dans votre {{Info()}}.</p>
+						  </div>
+						</div>						
+					</div>
+										
+					
+					
+					<!-- Button Erase New-->
+					<div ng-show="buttonNew() == '1' && NewInLocal()"  class="content-block" style='margin-bottom:60px;'>
+						<p>J'ai pris connaissance des nouveaux concerts:</p>
+						<span ng-click="DeleteNew()" class="button button-fill button-raised">Ok</span>	
+					</div>
+					
+					<!-- Pas de nouveau concert-->
+					<div ng-show="!NewInLocal() && buttonNew() == '1'"  class="content-block" style='margin-bottom:60px;'>
+						<div class="content-block inset">
+						  <div class="content-block-inner">
+							<p>Il n'y a pas de nouveau concert.</p>
+						  </div>
+						</div>						
+					</div>
+					
+					<!-- Pas de concert en Favoris -->
+					<div ng-show="!FavInLocal() && filtreFav() == '1' && showSearch() != '1'"  class="content-block" style='margin-bottom:60px;'>
+						<div class="content-block inset">
+						  <div class="content-block-inner">
+							<p>Rajoutez un concert à vos favoris en cliquant sur l'icône <i class="icon fa fa-star-o fa-flip-vertical"></i>.</p>
+						  </div>
+						</div>							
+					</div>
+					
+					<!-- Margin BOTTOM-->
+					<div class="content-block" style='margin-bottom:60px;'>
+						<p></p>
+					</div>
+					
+						
+			</div>
+		</div> <!-- FIN Page Liste Event  -->
+		  
+		  
+		<!-- Page Detail Concert -->
+		<div data-page="detailsPage" class="page cached" ng-controller="DetailPageController">
+		  
+		   <!-- Navbar -->
+			 <div class="navbar">
+				  <div class="navbar-inner">
+					<div class="left"><a href="index.html" class="back link icon-only"><i class="icon icon-back"></i></a></div>
+					<div class="center">Détail Concert</div>
+				  </div>
+			  </div>
+			  
+            <!-- Page content 2-->
+            <div class="page-content" ng-model="concert">
+					 
+					<div class="card facebook-card" >				
+						
+						<div class="card-header">						
+							<div class="row no-gutter">							
+								<div class="col-90">
+									<div class="facebook-name" ng-show="concert.IsFestivalConcert == '0'">{{concert.groupe_1}}
+										<span ng-show="IsNew(concert.id)">
+											<span class="badge bg-red">NOUVEAU</span>
+										</span>
+										<div class="GroupeStyle" ng-show="concert.style_1 != ''">
+											({{concert.style_1}})
+										</div>
+									</div>
+									<div class="facebook-name" ng-show="concert.IsFestivalConcert == '1'">Festival {{concert.NomFestivalConcert}}
+										<span ng-show="IsNew(concert.id)">
+											<span class="badge bg-red">NOUVEAU</span>
+										</span>
+									</div>
+									<div class="facebook-date">
+										{{concert.date}} 
+									</div>
+								</div>
+								<div class="col-10 align-right">
+									<span ng-click="$event.preventDefault(); $event.stopPropagation();AddFav(concert.id)" ng-show="!IsFav(concert.id)">
+										<i class="fa fa-star-o fa-lg fa-flip-vertical" eat-click></i>
+									</span>							
+									<span ng-click="$event.preventDefault(); $event.stopPropagation(); DeleteFav(concert.id)" ng-show="IsFav(concert.id)">
+									<i class="fa fa-star fa-lg fa-flip-vertical" style="color: #FF0000;"></i>
+									</span>
+								</div>
+							</div>	
+						</div>
+
+						
+						<div class="card-content">
+							<div class="card-content-inner" ng-hide="concert.groupe_2 == '' || concert.IsFestivalConcert == '1'">
+							  <p ng-hide="concert.groupe_2 == ''">- {{concert.groupe_2}} <span class='GroupeStyle' ng-show="concert.style_2 != ''">({{concert.style_2}})</span></p>						 
+							  <p ng-hide="concert.groupe_3 == ''">- {{concert.groupe_3}} <span class='GroupeStyle' ng-show="concert.style_3 != ''">({{concert.style_3}})</span></p>						 
+							  <p ng-hide="concert.groupe_4 == ''">- {{concert.groupe_4}} <span class='GroupeStyle' ng-show="concert.style_4 != ''">({{concert.style_4}})</span></p>							   	
+							  <p ng-hide="concert.groupe_5 == ''">- {{concert.groupe_5}} <span class='GroupeStyle' ng-show="concert.style_5 != ''">({{concert.style_5}})</span></p>
+							  <p><u>Ville</u>: {{concert.ville}} ({{concert.departement}})</p>
+							  <p><u>Salle</u>: {{concert.salle}}</p>
+							  <p ng-hide="concert.adresse === '' || concert.adresse === ' '"><u>Adresse</u>: {{concert.adresse}}</p>
+							  <p><u>Heure</u>: {{concert.heure}}</p>
+							  <p><u>Prix</u>: {{concert.prix}}</p>	
+							</div>
+							<div class="card-content-inner" ng-show="concert.IsFestivalConcert == '1'">
+							  <p ng-hide="concert.groupe_1 == ''">- {{concert.groupe_1}} <span class='GroupeStyle' ng-show="concert.style_1 != ''">({{concert.style_1}})</span></p>						 
+							  <p ng-hide="concert.groupe_2 == ''">- {{concert.groupe_2}} <span class='GroupeStyle' ng-show="concert.style_2 != ''">({{concert.style_2}})</span></p>						 
+							  <p ng-hide="concert.groupe_3 == ''">- {{concert.groupe_3}} <span class='GroupeStyle' ng-show="concert.style_3 != ''">({{concert.style_3}})</span></p>						 
+							  <p ng-hide="concert.groupe_4 == ''">- {{concert.groupe_4}} <span class='GroupeStyle' ng-show="concert.style_4 != ''">({{concert.style_4}})</span></p>							   	
+							  <p ng-hide="concert.groupe_5 == ''">- {{concert.groupe_5}} <span class='GroupeStyle' ng-show="concert.style_5 != ''">({{concert.style_5}})</span></p>
+							  <p><u>Ville</u>: {{concert.ville}} ({{concert.departement}})</p>
+							  <p><u>Salle</u>: {{concert.salle}}</p>
+							  <p ng-hide="concert.adresse === '' || concert.adresse === ' '"><u>Adresse</u>: {{concert.adresse}}</p>
+							  <p><u>Heure</u>: {{concert.heure}}</p>
+							  <p><u>Prix</u>: {{concert.prix}}</p>		
+							</div>	
+						
+							
+							<div class="card-content-inner" ng-show="concert.groupe_2 == '' && concert.IsFestivalConcert == '0'">
+							  <p><u>Ville</u>: {{concert.ville}} ({{concert.departement}})</p>
+							  <p><u>Salle</u>: {{concert.salle}}</p>
+							  <p ng-hide="concert.adresse === '' || concert.adresse === ' '"><u>Adresse</u>: {{concert.adresse}}</p>
+							  <p><u>Heure</u>: {{concert.heure}}</p>
+							  <p><u>Prix</u>: {{concert.prix}}</p>		
+							</div>							
+						</div>
+						
+						<div class="card-footer" ng-show="concert.etat != 0 || concert.IsPartenaire == 1">
+						<span ng-show="concert.etat == 2"><span class="badge bg-red">CONCERT ANNUL&Eacute;</span></span>
+						<span ng-show="concert.etat == 1"><span class="badge bg-red">CONCERT COMPLET</span></span>
+						<span ng-show="concert.etat == 0"></span>
+						<span ng-show="concert.IsPartenaire == 1"><i class="fa fa-flag-o" aria-hidden="true"></i> Concert Partenaire</span>
+					  </div>
+						
+					</div> 
+					
+					<div ng-hide="concert.flyer == ''" style="background-image: url('http://www.sueurdemetal.com/images/flyers/{{concert.flyer}}');" class='flyer'>
+					 <img ng-src="http://www.sueurdemetal.com/images/flyers/{{concert.flyer}}" style="max-width:99%; visibility:hidden" />
+					</div>	
+						
+					<!-- Margin BOTTOM-->
+					<div class="content-block" style='margin-bottom:60px;'>
+						<p></p>
+					</div>	
+					
+            </div>
+			
+		</div>  <!-- Fin Page Detail concert -->
+		  
+		  
+		<!-- Page Departement -->
+		<div data-page="Departement" class="page cached" ng-controller="DepartementController">
+		  
+		   <!-- Navbar -->
+			 <div class="navbar">
+				  <div class="navbar-inner">
+					<div class="left"><a href="#" class="back link icon-only" ng-click='ResetDep()'><i class="icon icon-back"></i></a></div>
+					<div class="center">Réglages</div>
+				  </div>
+			  </div>
+			  
+            <!-- Page Departement content-->
+            <div class="page-content" ng-model="concert">
+				<div class="list-block">
+				  <ul>
+					<li id='DepartementSelect'><a href="#" class="item-link smart-select departement" data-back-on-select="true">
+						<select name="theselect" id="theselect"  maxlength="1">
+						  <optgroup label="Choississez votre département:">
+							<option value='' ng-selected="{{selectDep == null}}">Aucun</option>
+							<option ng-repeat="dep in departements" value="{{dep.value}}" ng-selected="{{ dep.value == selectDep }}">{{dep.value}} {{dep.nom}}</option>
+						  </optgroup>
+						</select>
+						<div class="item-content">
+						  <div class="item-inner">
+							<div class="item-title">Département sélectionné</div>
+						  </div>
+						</div></a></li>
+						<li></li>
+						
+						 <li><a href="#" class="item-link smart-select region" data-back-on-select="true">
+						<select name="selectRegion" id="selectRegion"  maxlength="1" >
+						  <optgroup label="Choississez votre région:">
+							<option value='' ng-selected="{{selectReg == null}}">Aucun</option>
+							<option ng-repeat="region in regions" value="{{region.value}}" ng-selected="{{ region.value == selectReg }}">{{region.nom}}</option>
+						  </optgroup>
+						</select>
+						<div class="item-content">
+						  <div class="item-inner">
+							<div class="item-title">Région sélectionnée</div>
+						  </div>
+						</div></a></li>
+						
+						<li><a href="#" class="item-link smart-select new" data-back-on-select="true">
+						<select name="ParamNouveaute" id="ParamNouveaute"  maxlength="1" >
+						  <optgroup label="Suppression automatique des nouveaux concerts">
+							<option ng-repeat="Nouveaute in Nouveautes" value="{{Nouveaute.value}}" ng-selected="{{ Nouveaute.value == ParamNew }}">{{Nouveaute.nom}}</option>
+						  </optgroup>
+						</select>
+						
+						<div class="item-content">
+						  <div class="item-inner">
+							<div class="item-title">Suppression automatique <br/>des nouveaux concerts</div>
+						  </div>
+						</div></a></li>
+				  </ul>
+				</div>
+				
+			</div>   <!-- Fin Page Departement content-->
+		</div><!-- Fin Page Departement -->
+		  
+		  
+		  <!-- Page FAQ -->
+      <div data-page="FAQ" class="page cached no-toolbar" ng-controller="FAQController">
+		  
+		   <!-- Navbar -->
+			 <div class="navbar">
+				  <div class="navbar-inner">
+					<div class="left"><a href="index.html" class="back link icon-only"><i class="icon fa fa-home"></i></a></div>
+					<div class="center">FAQ</div>
+				  </div>
+			  </div>
+			  
+            <!-- Page content FAQ -->
+            <div class="page-content" ng-model="concert">
+				<div class="list-block accordion-list">
+				  <ul>
+				  				 		
+					<li class="accordion-item"><a href="#" class="item-content item-link">
+						<div class="item-inner">
+						  <div class="item-title">Annoncer un concert</div>
+						</div></a>
+					  <div class="accordion-item-content">
+						<div class="content-block">
+						  <p>Nous vous invitons à vous rendre sur le site <a href='#'  ng-click='SDMAnnonce()'>Sueur de Metal</a> afin d'annoncer un concert.</p>
+						</div>
+					  </div>
+					</li>
+					<li class="accordion-item"><a href="#" class="item-content item-link">
+						<div class="item-inner">
+						  <div class="item-title">CGU</div>
+						</div></a>
+					  <div class="accordion-item-content">
+						<div class="content-block">
+						    <p>Pour prendre connaissances des Conditions Générales d'Utilisation, merci de suivre ce lien: <a href='#'  ng-click='SDMCGU()'>CGU</a>.</p>
+						</div>
+					  </div>
+					</li>
+					<li class="accordion-item"><a href="#" class="item-content item-link">
+						<div class="item-inner">
+						  <div class="item-title">Confidentialité</div>
+						</div></a>
+					  <div class="accordion-item-content">
+						<div class="content-block">
+						  <p>Nous ne rassemblons aucune données personnelles.<br/>
+						  Toutes les données relatives à l'application sont stockées sur votre smartphone.</p>
+						</div>
+					  </div>
+					</li>
+					<li class="accordion-item"><a href="#" class="item-content item-link">
+						<div class="item-inner">
+						  <div class="item-title">Connexion</div>
+						</div></a>
+					  <div class="accordion-item-content">
+						<div class="content-block">
+						  <p>Le téléchargement de la liste des concerts, hors flyer, est d'environ 50 Ko. <br/>
+						  La liste des concerts est téléchargée à chaque ouverture de l'application.</p>
+						</div>
+					  </div>
+					</li>
+					 <li class="accordion-item"><a href="#" class="item-content item-link">
+						<div class="item-inner">
+						  <div class="item-title">Contacts</div>
+						</div></a>
+					  <div class="accordion-item-content">
+						<div class="content-block">
+						  <p><u>Sueur de Metal</u> : <i class="fa fa-facebook-official fa-2x" aria-hidden="true" ng-click='ContactSDMFB()'></i> - <i class="fa fa-2x fa-instagram" aria-hidden="true" ng-click='ContactSDMInsta()'></i> - contact@sueurdemetal.com</br>
+						  <u>Graphiste</u> : <i class="fa fa-facebook-official fa-2x" aria-hidden="true" ng-click='ContactBeastFB()'></i></p>
+						</div>
+					  </div>
+					</li>
+					<li class="accordion-item"><a href="#" class="item-content item-link">
+						<div class="item-inner">
+						  <div class="item-title">Comment créer un favori ?</div>
+						</div></a>
+					  <div class="accordion-item-content">
+						<div class="content-block">
+						  <p>Pour créer un favori, il vous suffit de cliquer sur l'icône <i class="icon fa fa-star-o fa-flip-vertical"></i> présent sur la fiche d'un concert.
+						  </p>
+						</div>
+					  </div>
+					</li>
+					<li class="accordion-item"><a href="#" class="item-content item-link">
+						<div class="item-inner">
+						  <div class="item-title">Mentions Légales</div>
+						</div></a>
+					  <div class="accordion-item-content">
+						<div class="content-block">
+						  <p>Contenu édité et distribué par Sueur de Metal via le site internet <a href='#' ng-click='SDMHome();'>http://www.sueurdemetal.com</a>. <br/><br/>
+						  Adresse de courrier électronique: contact@sueurdemetal.com <br/><br/>
+						  Hébergeur du site internet: <a href='#' ng-click='Amen();'>http://www.amen.fr</a>. <br/><br/>
+						  Concepteur général et développeur de l'application: Charles TALBOT<br/><br/>
+						  Technologies utilisées: <a href='#' ng-click='AngularJS()'>AngularJS</a>, <a href='#' ng-click='Framework7()'>Framework7</a>, <a href='#' ng-click='Phonegap()'>Phonegap</a><br/><br/>
+						  Designer Logo et écran d'accueil : <a href='#' ng-click='ContactBeastFB()'>Beast Creation</a>
+						  </p>
+						</div>
+					  </div>
+					</li>
+					<li class="accordion-item"><a href="#" class="item-content item-link">
+						<div class="item-inner">
+						  <div class="item-title">Nouveau concert</div>
+						</div></a>
+					  <div class="accordion-item-content">
+						<div class="content-block">
+						  <p>L'analyse des nouveaux concerts est effectuée uniquement :<br/>
+						  - Lors d'une connexion à l'application avec internet.<br/>
+						  - Si la liste des concerts a été mise à jour sur le serveur.<br/>
+						  - Par rapport à votre département ou région paramétrée.<br/><br/>
+						  Par exemple, si vous avez paramétré votre département sur 75, vous serez uniquement notifié des nouveaux concerts qui se déroulent dans le 75.
+						  </p>
+						</div>
+					  </div>
+					</li>
+					<li class="accordion-item"><a href="#" class="item-content item-link">
+						<div class="item-inner">
+						  <div class="item-title">Pourquoi mon favori a-t-il disparu ?</div>
+						</div></a>
+					  <div class="accordion-item-content">
+						<div class="content-block">
+						  <p>Les évenements ne sont pas sauvegardés.<br/>Une fois la date d'un concert passée, celui-ci disparait de l'application, qu'il soit rajouté en favori ou non.</p>
+						</div>
+					  </div>
+					</li>
+					<li class="accordion-item"><a href="#" class="item-content item-link">
+						<div class="item-inner">
+						  <div class="item-title">Qui sommes-nous ?</div>
+						</div></a>
+					  <div class="accordion-item-content">
+						<div class="content-block">
+						<p>SueurDeMetal.com est un site Internet participatif créé en 2003 qui référence les concerts Metal, Hardcore, Punk et leurs dérivés… à venir dans toute la France.</p>
+
+						<p>L’idée de cette base de données est née des membres de l’association nantaise SOUND EFFECT, un collectif de groupes créé en 1999 qui organisait des concerts et éditait « L’Info Metal » une lettre d’information mensuelle gratuite.</p>
+
+						<p>Une 2ème version du site a été mise en ligne en 2007 et un partenariat avec le magazine Metallian a permis d’en proposer une 3ème version en mars 2014. Fin 2014, l’asso Soon To Be Dead est créée pour gérer le site.</p>
+
+						<p>Depuis octobre 2015, le site est décliné en version magazine papier trimestriel et gratuit pour la zone « Pays de la Loire - Bretagne » distribué un peu partout dans ces 2 régions.
+
+						<p>Début 2016, Charles un passionné d’Informatique et utilisateur régulier du site, nous a soumis un projet d’application qui nous a tout de suite plu. 
+						Après quelques mois de travail, cette appli gratuite est lancée en août 2016 !</p>
+
+
+						<p><u>Équipe actuelle</u> :<br/>
+
+						Karen : Boss et sa propre esclave…<br/>
+						Charles : Créateur de l’appli et nouveau Webmaster<br/>
+						Claire : Conseil communication</p>
+
+						<p><u>Anciens membres</u> :<br/>
+						Arno, Christophe, Spoker et Zombui</p>
+
+						</div>
+					  </div>
+					</li>
+					
+					
+				  </ul>
+				</div>	 
+				</div>	 
+					
+			
+      </div>  <!-- Fin Page FAQ -->
+		  
+		  
+		  <!-- Page Liste Groupes -->
+    <div data-page="ListeGroupes" class="page cached no-toolbar" ng-controller="GroupeAlphaController" id='ListeGroupes'>
+		  
+		   <!-- Navbar -->
+			 <div class="navbar">
+				  <div class="navbar-inner">
+					<div class="left"><a href="#" class="back link icon-only"><i class="icon fa fa-home"></i></a></div>
+					<div class="center">Groupes</div>
+				  </div>
+			  </div>
+			  
+            <!-- Page Liste Groupes content-->
+		    <div class="page-content">
+				<div class="list-block contacts-block">
+					<div class="list-group" ng-show="ArrayA() != ''">
+						<ul>
+						  <li class="list-group-title">A</li>
+						  <li ng-repeat="groupe in ArrayA() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayB() != ''">
+						<ul>
+						  <li class="list-group-title">B</li>
+						  <li ng-repeat="groupe in ArrayB() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayC() != ''">
+						<ul>
+						  <li class="list-group-title">C</li>
+						  <li ng-repeat="groupe in ArrayC() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayD() != ''">
+						<ul>
+						  <li class="list-group-title">D</li>
+						  <li ng-repeat="groupe in ArrayD() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayE() != ''">
+						<ul>
+						  <li class="list-group-title">E</li>
+						  <li ng-repeat="groupe in ArrayE() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayF() != ''">
+						<ul>
+						  <li class="list-group-title">F</li>
+						  <li ng-repeat="groupe in ArrayF() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayG() != ''">
+						<ul>
+						  <li class="list-group-title">G</li>
+						  <li ng-repeat="groupe in ArrayG() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayH() != ''">
+						<ul>
+						  <li class="list-group-title">H</li>
+						  <li ng-repeat="groupe in ArrayH() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayI() != ''">
+						<ul>
+						  <li class="list-group-title">I</li>
+						  <li ng-repeat="groupe in ArrayI() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayJ() != ''">
+						<ul>
+						  <li class="list-group-title">J</li>
+						  <li ng-repeat="groupe in ArrayJ() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayK() != ''">
+						<ul>
+						  <li class="list-group-title">K</li>
+						  <li ng-repeat="groupe in ArrayK() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayL() != ''">
+						<ul>
+						  <li class="list-group-title">L</li>
+						  <li ng-repeat="groupe in ArrayL() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayM() != ''">
+						<ul>
+						  <li class="list-group-title">M</li>
+						  <li ng-repeat="groupe in ArrayM() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayN() != ''">
+						<ul>
+						  <li class="list-group-title">N</li>
+						  <li ng-repeat="groupe in ArrayN() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayO() != ''">
+						<ul>
+						  <li class="list-group-title">O</li>
+						  <li ng-repeat="groupe in ArrayO() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayP() != ''">
+						<ul>
+						  <li class="list-group-title">P</li>
+						  <li ng-repeat="groupe in ArrayP() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayQ() != ''">
+						<ul>
+						  <li class="list-group-title">Q</li>
+						  <li ng-repeat="groupe in ArrayQ() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayR() != ''">
+						<ul>
+						  <li class="list-group-title">R</li>
+						  <li ng-repeat="groupe in ArrayR() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayS() != ''">
+						<ul>
+						  <li class="list-group-title">S</li>
+						  <li ng-repeat="groupe in ArrayS() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayT() != ''">
+						<ul>
+						  <li class="list-group-title">T</li>
+						  <li ng-repeat="groupe in ArrayT() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayU() != ''">
+						<ul>
+						  <li class="list-group-title">U</li>
+						  <li ng-repeat="groupe in ArrayU() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayV() != ''">
+						<ul>
+						  <li class="list-group-title">V</li>
+						  <li ng-repeat="groupe in ArrayV() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayW() != ''">
+						<ul>
+						  <li class="list-group-title">W</li>
+						  <li ng-repeat="groupe in ArrayW() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayX() != ''">
+						<ul>
+						  <li class="list-group-title">X</li>
+						  <li ng-repeat="groupe in ArrayX() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayY() != ''">
+						<ul>
+						  <li class="list-group-title">Y</li>
+						  <li ng-repeat="groupe in ArrayY() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="ArrayZ() != ''">
+						<ul>
+						  <li class="list-group-title">Z</li>
+						  <li ng-repeat="groupe in ArrayZ() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					<div class="list-group" ng-show="Array0() != ''">
+						<ul>
+						  <li class="list-group-title">#</li>
+						  <li ng-repeat="groupe in Array0() | orderBy:'name':false">
+							<div class="item-content" ng-click='ListeGroupe(groupe.name)'>
+							  <div class="item-inner">
+								<div class="item-title">{{groupe.name}}</div>
+							  </div>
+							</div>
+						  </li>				 
+						</ul>
+					</div>
+					
+					
+				</div>
+			</div>
+			<ul class="list-index"></ul> 
+		
+		</div><!-- Fin Page Liste Groupes -->
+		
+		
+		  <!-- Page Liste Event Groupe -->
+     <div data-page="Liste-event-groupe" class="page cached no-toolbar" ng-controller="ListeGroupeController"  id="ListeEventGroupe">	
+		  
+		     <!-- Navbar -->
+			 <div class="navbar">
+				  <div class="navbar-inner">
+					<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>
+					<div class="center">{{name()}}</div>
+				  </div>				  
+			  </div> 
+			  
+						 
+            <!-- Page content Liste Event Groupe-->
+            <div class="page-content">	
+																	
+					<div class="card facebook-card"  ng-repeat="concert in filteritem = (concerts() | exact:name())">
+						
+					 	<div class="card-header">
+							<a href="#detailsPage" ng-click="onItemClicked(concert)">
+							<div class="row no-gutter">							
+								<div class="col-90">
+									<div class="facebook-name" ng-show="concert.IsFestivalConcert == '0'">{{concert.groupe_1}}
+										<span ng-show="IsNew(concert.id)">
+											<span class="badge bg-red">NOUVEAU</span>
+										</span>
+										<div class="GroupeStyle" ng-show="concert.style_1 != ''">
+											({{concert.style_1}})
+										</div>
+									</div>
+									<div class="facebook-name" ng-show="concert.IsFestivalConcert == '1'">Festival {{concert.NomFestivalConcert}}
+										<span ng-show="IsNew(concert.id)">
+											<span class="badge bg-red">NOUVEAU</span>
+										</span>
+									</div>
+									<div class="facebook-date">
+										{{concert.date}} - {{concert.ville}} ({{concert.departement}})
+									</div>
+								</div>
+								<div class="col-10 align-right">
+									<span ng-click="$event.preventDefault(); $event.stopPropagation();AddFav(concert.id)" ng-show="!IsFav(concert.id)">
+										<i class="fa fa-star-o fa-lg fa-flip-vertical" eat-click></i>
+									</span>							
+									<span ng-click="$event.preventDefault(); $event.stopPropagation(); DeleteFav(concert.id)" ng-show="IsFav(concert.id)">
+									<i class="fa fa-star fa-lg fa-flip-vertical" style="color: #FF0000;"></i>
+									</span>
+								</div>
+							</div>	
+							</a>
+						</div>						 
+					
+						<div class="card-content" >
+							<a href="#detailsPage" ng-click="onItemClicked(concert)">
+							<div class="card-content-inner" ng-hide="concert.groupe_2 == '' || concert.IsFestivalConcert == '1'">
+							  <p ng-hide="concert.groupe_2 == ''">- {{concert.groupe_2}} <span class='GroupeStyle' ng-show="concert.style_2 != ''">({{concert.style_2}})</span></p>						 
+							  <p ng-hide="concert.groupe_3 == ''">- {{concert.groupe_3}} <span class='GroupeStyle' ng-show="concert.style_3 != ''">({{concert.style_3}})</span></p>						 
+							  <p ng-hide="concert.groupe_4 == ''">- {{concert.groupe_4}} <span class='GroupeStyle' ng-show="concert.style_4 != ''">({{concert.style_4}})</span></p>							   	
+							  <p ng-hide="concert.groupe_5 == ''">- {{concert.groupe_5}} <span class='GroupeStyle' ng-show="concert.style_5 != ''">({{concert.style_5}})</span></p>							   	
+							</div>
+							<div class="card-content-inner" ng-show="concert.IsFestivalConcert == '1'">
+							  <p ng-hide="concert.groupe_1 == ''">- {{concert.groupe_1}} <span class='GroupeStyle' ng-show="concert.style_1 != ''">({{concert.style_1}})</span></p>						 
+							  <p ng-hide="concert.groupe_2 == ''">- {{concert.groupe_2}} <span class='GroupeStyle' ng-show="concert.style_2 != ''">({{concert.style_2}})</span></p>						 
+							  <p ng-hide="concert.groupe_3 == ''">- {{concert.groupe_3}} <span class='GroupeStyle' ng-show="concert.style_3 != ''">({{concert.style_3}})</span></p>						 
+							  <p ng-hide="concert.groupe_4 == ''">- {{concert.groupe_4}} <span class='GroupeStyle' ng-show="concert.style_4 != ''">({{concert.style_4}})</span></p>							   	
+							  <p ng-hide="concert.groupe_5 == ''">- {{concert.groupe_5}} <span class='GroupeStyle' ng-show="concert.style_5 != ''">({{concert.style_5}})</span></p>							   	
+							</div>	
+						</div>		
+
+					  <div class="card-footer" ng-show="concert.etat != 0 || concert.IsPartenaire == 1">
+						<span ng-show="concert.etat == 2"><span class="badge bg-red">CONCERT ANNUL&Eacute;</span></span>
+						<span ng-show="concert.etat == 1"><span class="badge bg-red">CONCERT COMPLET</span></span>
+						<span ng-show="concert.etat == 0"></span>
+						<span ng-show="concert.IsPartenaire == 1"><i class="fa fa-flag-o" aria-hidden="true"></i> Concert Partenaire</span>
+					  </div>	
+						</a>
+						
+					</div>	
+					
+					<!-- Margin BOTTOM-->
+					<div class="content-block" style='margin-bottom:60px;'>
+						<p></p>
+					</div>
+					
+						
+            </div>
+     </div> <!-- FIN Page Liste Event Groupe -->
+		  
+			
+		 <!-- Page CALENDAR -->
+     <div data-page="calendar" class="page cached" ng-controller="CalendarController"  id="Calendar">	
+		  
+		     <!-- Navbar -->
+			 <div class="navbar">
+				  <div class="navbar-inner">
+					<div class="left"><a href="#" class="back link icon-only"><i class="icon fa fa-home"></i></a></div>
+					<div class="center">Calendrier</div>
+				  </div>				  
+			  </div> 
+			  
+						 
+            <!-- Page content CALENDAR-->
+            <div class="page-content">	
+							
+					<div class="content-block inset" ng-show="InfoDep() != ''">
+						<div class="content-block-inner">
+							<p>Calendrier des concerts {{InfoDep()}}</p>							
+						</div>
+					</div>	
+					<!-- Margin BOTTOM-->
+					<div class="content-block" style='margin-bottom:101px;' ng-hide="InfoDep() != ''">
+						<p></p>
+					</div>					
+					<div class="content-block">					
+					  <div style="padding:0; margin-right:-15px; width:auto" class="content-block-inner">
+						<div id="calendar-inline-container"></div>
+					  </div>
+					</div> 
+					
+					<div class="content-block inset">
+						<div class="content-block-inner">
+							<p><span class="span-pick-demo"><span class="pick-demo"></span></span> : <i>concert à la date indiquée</i></p>
+						</div>
+					</div>
+					<!-- Margin BOTTOM-->
+					<div class="content-block" style='margin-bottom:60px;'>
+						<p></p>
+					</div>
+					
+						
+            </div>
+    </div> <!-- FIN Page CALENDAR -->		
+		
+		
+		  <!-- Page Liste Date Calendar -->
+     <div data-page="Liste-date" class="page cached no-toolbar" ng-controller="ListeDateController"  id="ListeDate">	
+		  
+		     <!-- Navbar -->
+			 <div class="navbar">
+				  <div class="navbar-inner">
+					<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>
+					<div class="center">Concerts le {{date}}</div>
+				  </div>				  
+			  </div> 
+			  
+						 
+            <!-- Page content Liste Date Calendar-->
+            <div class="page-content">	
+																	
+					<div class="card facebook-card"  ng-repeat="concert in filteritem = (concerts() | Filtre:Localisation()  |customDate:date | customTime :DateNow)">
+						
+					 	<div class="card-header">
+							<a href="#detailsPage" ng-click="onItemClicked(concert)">
+							<div class="row no-gutter">							
+								<div class="col-90">
+									<div class="facebook-name" ng-show="concert.IsFestivalConcert == '0'">{{concert.groupe_1}}
+										<span ng-show="IsNew(concert.id)">
+											<span class="badge bg-red">NOUVEAU</span>
+										</span>
+										<div class="GroupeStyle" ng-show="concert.style_1 != ''">
+											({{concert.style_1}})
+										</div>
+									</div>
+									<div class="facebook-name" ng-show="concert.IsFestivalConcert == '1'">Festival {{concert.NomFestivalConcert}}
+										<span ng-show="IsNew(concert.id)">
+											<span class="badge bg-red">NOUVEAU</span>
+										</span>
+									</div>
+									<div class="facebook-date">
+										{{concert.date}} - {{concert.ville}} ({{concert.departement}})
+									</div>
+								</div>
+								<div class="col-10 align-right">
+									<span ng-click="$event.preventDefault(); $event.stopPropagation();AddFav(concert.id)" ng-show="!IsFav(concert.id)">
+										<i class="fa fa-star-o fa-lg fa-flip-vertical" eat-click></i>
+									</span>							
+									<span ng-click="$event.preventDefault(); $event.stopPropagation(); DeleteFav(concert.id)" ng-show="IsFav(concert.id)">
+									<i class="fa fa-star fa-lg fa-flip-vertical" style="color: #FF0000;"></i>
+									</span>
+								</div>
+							</div>	
+							</a>
+						</div>						 
+					
+						<div class="card-content" >
+							<a href="#detailsPage" ng-click="onItemClicked(concert)">
+							<div class="card-content-inner" ng-hide="concert.groupe_2 == '' || concert.IsFestivalConcert == '1'">
+							  <p ng-hide="concert.groupe_2 == ''">- {{concert.groupe_2}} <span class='GroupeStyle' ng-show="concert.style_2 != ''">({{concert.style_2}})</span></p>						 
+							  <p ng-hide="concert.groupe_3 == ''">- {{concert.groupe_3}} <span class='GroupeStyle' ng-show="concert.style_3 != ''">({{concert.style_3}})</span></p>						 
+							  <p ng-hide="concert.groupe_4 == ''">- {{concert.groupe_4}} <span class='GroupeStyle' ng-show="concert.style_4 != ''">({{concert.style_4}})</span></p>							   	
+							  <p ng-hide="concert.groupe_5 == ''">- {{concert.groupe_5}} <span class='GroupeStyle' ng-show="concert.style_5 != ''">({{concert.style_5}})</span></p>							   	
+							</div>
+							<div class="card-content-inner" ng-show="concert.IsFestivalConcert == '1'">
+							  <p ng-hide="concert.groupe_1 == ''">- {{concert.groupe_1}} <span class='GroupeStyle' ng-show="concert.style_1 != ''">({{concert.style_1}})</span></p>						 
+							  <p ng-hide="concert.groupe_2 == ''">- {{concert.groupe_2}} <span class='GroupeStyle' ng-show="concert.style_2 != ''">({{concert.style_2}})</span></p>						 
+							  <p ng-hide="concert.groupe_3 == ''">- {{concert.groupe_3}} <span class='GroupeStyle' ng-show="concert.style_3 != ''">({{concert.style_3}})</span></p>						 
+							  <p ng-hide="concert.groupe_4 == ''">- {{concert.groupe_4}} <span class='GroupeStyle' ng-show="concert.style_4 != ''">({{concert.style_4}})</span></p>							   	
+							  <p ng-hide="concert.groupe_5 == ''">- {{concert.groupe_5}} <span class='GroupeStyle' ng-show="concert.style_5 != ''">({{concert.style_5}})</span></p>							   	
+							</div>		
+						
+						</div>	
+
+					  <div class="card-footer" ng-show="concert.etat != 0 || concert.IsPartenaire == 1">
+						<span ng-show="concert.etat == 2"><span class="badge bg-red">CONCERT ANNUL&Eacute;</span></span>
+						<span ng-show="concert.etat == 1"><span class="badge bg-red">CONCERT COMPLET</span></span>
+						<span ng-show="concert.etat == 0"></span>
+						<span ng-show="concert.IsPartenaire == 1"><i class="fa fa-flag-o" aria-hidden="true"></i> Concert Partenaire</span>
+					  </div>
+						</a>
+						
+					</div>	
+					
+					<!-- Date Null  --> 
+					<div ng-show="DateNull === 1" id='searchnull' class="content-block" style='margin-bottom:60px;'>
+						<div class="content-block inset">
+						  <div class="content-block-inner">
+							<p>Aucun concert n'est répertorié pour le {{date}} {{departement}}.</p>
+						  </div>
+						</div>						
+					</div>
+					
+					<!-- Margin BOTTOM-->
+					<div class="content-block" style='margin-bottom:60px;'>
+						<p></p>
+					</div>
+					
+						
+			</div>
+		</div> <!-- FIN Page Liste Date Calendar -->
+		  
+		  
+		 <!-- Page Liste a la UNE -->
+    <div data-page="Une" class="page cached no-toolbar" ng-controller="UneController"  id="ListeUne">	
+		  
+		  
+		     <!-- Navbar -->
+			 <div class="navbar">
+				  <div class="navbar-inner">
+					<div class="left"><a href="#" class="back link icon-only"><i class="icon fa fa-home"></i></a></div>
+					<div class="center">Concerts à la Une</div>
+				  </div>				  
+			  </div> 
+			  
+						 
+            <!-- Page content Liste Date Calendar-->
+            <div class="page-content">	
+					
+					<div class="content-block inset">
+					  <div class="content-block-inner">
+						<p>Pour toute proposition de partenariat : contact@sueurdemetal.com</p>
+					  </div>
+					</div>	
+					
+					<div class="card facebook-card"  ng-repeat="concert in filteritem = (concerts() | IsPartenaire:1 | customTime :DateNow)">
+						
+					 	<div class="card-header">
+							<a href="#detailsPage" ng-click="onItemClicked(concert)">
+							<div class="row no-gutter">							
+								<div class="col-90">
+									<div class="facebook-name" ng-show="concert.IsFestivalConcert == '0'">{{concert.groupe_1}}
+										<span ng-show="IsNew(concert.id)">
+											<span class="badge bg-red">NOUVEAU</span>
+										</span>
+										<div class="GroupeStyle" ng-show="concert.style_1 != ''">
+											({{concert.style_1}})
+										</div>
+									</div>
+									<div class="facebook-name" ng-show="concert.IsFestivalConcert == '1'">Festival {{concert.NomFestivalConcert}}
+										<span ng-show="IsNew(concert.id)">
+											<span class="badge bg-red">NOUVEAU</span>
+										</span>
+									</div>
+									<div class="facebook-date">
+										{{concert.date}} - {{concert.ville}} ({{concert.departement}})
+									</div>
+								</div>
+								<div class="col-10 align-right">
+									<span ng-click="$event.preventDefault(); $event.stopPropagation();AddFav(concert.id)" ng-show="!IsFav(concert.id)">
+										<i class="fa fa-star-o fa-lg fa-flip-vertical" eat-click></i>
+									</span>							
+									<span ng-click="$event.preventDefault(); $event.stopPropagation(); DeleteFav(concert.id)" ng-show="IsFav(concert.id)">
+									<i class="fa fa-star fa-lg fa-flip-vertical" style="color: #FF0000;"></i>
+									</span>
+								</div>
+							</div>	
+							</a>
+						</div>						 
+					
+						<div class="card-content" >
+							<a href="#detailsPage" ng-click="onItemClicked(concert)">
+							<div class="card-content-inner" ng-hide="concert.groupe_2 == '' || concert.IsFestivalConcert == '1'">
+							  <p ng-hide="concert.groupe_2 == ''">- {{concert.groupe_2}} <span class='GroupeStyle' ng-show="concert.style_2 != ''">({{concert.style_2}})</span></p>						 
+							  <p ng-hide="concert.groupe_3 == ''">- {{concert.groupe_3}} <span class='GroupeStyle' ng-show="concert.style_3 != ''">({{concert.style_3}})</span></p>						 
+							  <p ng-hide="concert.groupe_4 == ''">- {{concert.groupe_4}} <span class='GroupeStyle' ng-show="concert.style_4 != ''">({{concert.style_4}})</span></p>							   	
+							  <p ng-hide="concert.groupe_5 == ''">- {{concert.groupe_5}} <span class='GroupeStyle' ng-show="concert.style_5 != ''">({{concert.style_5}})</span></p>							   	
+							</div>                                                                                                                                     
+							<div class="card-content-inner" ng-show="concert.IsFestivalConcert == '1'">                                                                
+							  <p ng-hide="concert.groupe_1 == ''">- {{concert.groupe_1}} <span class='GroupeStyle' ng-show="concert.style_1 != ''">({{concert.style_1}})</span></p>						 
+							  <p ng-hide="concert.groupe_2 == ''">- {{concert.groupe_2}} <span class='GroupeStyle' ng-show="concert.style_2 != ''">({{concert.style_2}})</span></p>						 
+							  <p ng-hide="concert.groupe_3 == ''">- {{concert.groupe_3}} <span class='GroupeStyle' ng-show="concert.style_3 != ''">({{concert.style_3}})</span></p>						 
+							  <p ng-hide="concert.groupe_4 == ''">- {{concert.groupe_4}} <span class='GroupeStyle' ng-show="concert.style_4 != ''">({{concert.style_4}})</span></p>							   	
+							  <p ng-hide="concert.groupe_5 == ''">- {{concert.groupe_5}} <span class='GroupeStyle' ng-show="concert.style_5 != ''">({{concert.style_5}})</span></p>							   	
+							</div>	
+						</div>	
+
+					  <div class="card-footer" ng-show="concert.etat != 0 || concert.IsPartenaire == 1">
+						<span ng-show="concert.etat == 2"><span class="badge bg-red">CONCERT ANNUL&Eacute;</span></span>
+						<span ng-show="concert.etat == 1"><span class="badge bg-red">CONCERT COMPLET</span></span>
+						<span ng-show="concert.etat == 0"></span>
+						<span ng-show="concert.IsPartenaire == 1"><i class="fa fa-flag-o" aria-hidden="true"></i> Concert Partenaire</span>
+					  </div>
+						</a>
+						
+					</div>	
+					
+					<!-- Date Null  --> 
+					<div ng-show="DateNull === 1" id='searchnull' class="content-block" style='margin-bottom:60px;'>
+						<div class="content-block inset">
+						  <div class="content-block-inner">
+							<p>Aucun concert n'est répertorié pour le {{date}} {{departement}}.</p>
+						  </div>
+						</div>						
+					</div>
+					
+					<!-- Margin BOTTOM-->
+					<div class="content-block" style='margin-bottom:60px;'>
+						<p></p>
+					</div>
+					
+						
+			</div>
+		</div> <!-- FIN Page Liste UNE -->
+		  
+		   <!-- Page Partenaires -->
+		<div data-page="Partenaires" class="page cached no-toolbar" ng-controller="PartenairesController">
+		  
+		   <!-- Navbar -->
+			 <div class="navbar">
+				  <div class="navbar-inner">
+					<div class="left"><a href="index.html" class="back link icon-only"><i class="icon fa fa-home"></i></a></div>
+					<div class="center">Nos Partenaires</div>
+				  </div>
+			  </div>
+			  
+            <!-- Page content Partenaires -->
+            <div class="page-content" ng-model="concert">
+			
+				<div class="content-block inset">
+					  <div class="content-block-inner">
+						<p>Pour toute proposition de partenariat : contact@sueurdemetal.com</p>
+					  </div>
+					</div>
+				
+				<div class="card facebook-card">
+				  <div class="card-header">METALLIAN</div>
+				  <div class="card-content">
+					<div class="card-content-inner">Magazine Metal<br/>
+					<a href='#' ng-click='METALLIAN()'>www.metallian.net</a>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="card facebook-card">
+				  <div class="card-header">METALLIAN PRODS</div>
+				  <div class="card-content">
+					<div class="card-content-inner">Organisation de concerts sur Grenoble<br/>
+					<a href='#' ng-click='METALLIANPRODS()'>www.metallianprod.com</a>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="card facebook-card">
+				  <div class="card-header">GARMONBOZIA INC.</div>
+				  <div class="card-content">
+					<div class="card-content-inner">Organisation de concerts sur Paris, Rennes et Nantes<br/>
+					<a href='#' ng-click='GARMONBOZIA()'>www.facebook.com/Garmonbozia.Inc</a>
+					</div>
+				  </div>
+				</div>	
+				
+				<div class="card facebook-card">
+				  <div class="card-header">XTREME FEST</div>
+				  <div class="card-content">
+					<div class="card-content-inner">Festival près d’Albi<br/>
+					<a href='#' ng-click='XTREME()'>www.xtremefest.fr</a>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="card facebook-card">
+				  <div class="card-header">ANTHEMS OF STEEL</div>
+				  <div class="card-content">
+					<div class="card-content-inner">Organisation de concerts dans les Deux-Sèvres<br/>
+					<a href='#' ng-click='ANTHEMS()'>www.facebook.com/anthems.ofsteel.9</a>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="card facebook-card">
+				  <div class="card-header">BLACK FLAG PROD</div>
+				  <div class="card-content">
+					<div class="card-content-inner">Organisation de concerts sur Nantes<br/>
+					<a href='#' ng-click='BLACK()'>www.facebook.com/BlackFlagProduction666</a>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="card facebook-card">
+				  <div class="card-header">BLUE WAVE PROD</div>
+				  <div class="card-content">
+					<div class="card-content-inner">Organisation de concerts sur Nantes<br/>
+					<a href='#' ng-click='BLUE()'>www.facebook.com/bluewaveconcert</a>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="card facebook-card">
+				  <div class="card-header">RIFFEATER</div>
+				  <div class="card-content">
+					<div class="card-content-inner">Organisation de concerts sur Lille<br/>
+					<a href='#' ng-click='RIFFEATER()'>www.facebook.com/profile.php?id=100008459522952</a>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="card facebook-card">
+				  <div class="card-header">SHAYTAN</div>
+				  <div class="card-content">
+					<div class="card-content-inner">Groupe de Death-Thrash d’Annecy<br/>
+					<a href='#' ng-click='SHAYTAN()'>www.facebook.com/ShaytanDeathThrash</a>
+					</div>
+				  </div>
+				</div>
+				
+			</div>	 
+					
+
+		</div>  <!-- Fin Page Partenaires -->
+		  
+		  
+  </div>	 <!-- Fin PAGES -->	
+ </div>	 <!-- Fin view -->	
+		
+		
+</div> <!-- Fin Views -->
+	
+</body>
+
+</html>

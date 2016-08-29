@@ -1,0 +1,238 @@
+/* Add custom css here */
+@media (min-width:320px) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ 
+    .button-home{
+        height: 80px;
+        margin: auto;
+        margin-top: 7px;
+        padding-top: 5px;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+}
+@media (min-width:480px) { /* smartphones, Android phones, landscape iPhone */ 
+    .button-home{
+        height: 100px;
+        margin: auto;
+        margin-top: 15px;       
+        padding-top: 10px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
+@media (min-width:600px) { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ 
+     .button-home{
+        height: 140px;
+        margin: auto;
+        margin-top: 15px;       
+        padding-top: 25px;
+        margin-left: 5px;
+        margin-right: 5px;        
+    }
+    .fa-3x {
+        font-size: 4em;
+    }
+}
+@media (min-width:700px) { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ 
+     .button-home{
+        height: 180px;
+        margin: auto;
+        margin-top: 20px;       
+        padding-top: 40px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    .fa-3x {
+        font-size: 4em;
+    }
+}
+@media (min-width:801px) { /* tablet, landscape iPad, lo-res laptops ands desktops */ 
+    .button-home{
+        height: 180px;
+        margin: auto;
+        margin-top: 20px;       
+        padding-top: 40px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    .fa-3x {
+        font-size: 4em;
+    }
+}
+
+.button-home{
+    background: #fff;
+    color: #000;
+    
+}
+.splash {
+  display: none;
+}
+.fa-facebook {
+   color:#3b5998;
+}
+.GroupeStyle{
+	color: #616566;
+	font-size: 12px;
+	text-transform : capitalize;
+	font-weight: normal;
+}
+.fa-twitter {
+    color:#00aced;
+}
+.badgehome {
+    left: 100%;
+    margin-left: -10px;
+    top: -2px;
+    font-size: 10px;
+    line-height: 1.4;
+    padding: 1px 5px;
+}
+[ng-cloak].splash {
+  background-color: #428bca;
+  width: 100%;
+  text-align: center;
+  color: white;
+  display: block !important;
+}
+.facebook-card .card-header {
+display: block;
+padding: 10px;
+background:  #Fafafa;
+}
+.facebook-card .facebook-avatar {
+float: left;
+}
+.facebook-card .facebook-name {    
+font-size: 17px;
+font-weight: 600;
+}
+.card-header>a, .card-content-inner p{    
+color: #000;
+}
+#home a{
+color: #000;
+text-align: center;
+}
+.facebook-card{
+font-size: 13px;
+color: #000;
+}
+.facebook-card .card-footer {
+background: #fafafa;
+}
+.facebook-card .card-footer a {
+color: #81848b;
+font-weight: 500;
+}
+.facebook-card .card-content img {
+display: block;
+}
+.facebook-card .card-content-inner {
+padding: 15px 10px;
+}  
+.flyer{
+background : no-repeat;
+margin:8px;
+background-position-x: center;
+background-size: contain;
+}
+.filtre{
+	margin-top:0;
+	margin-bottom:10px;
+}
+.bg-red {
+    background-color: #ff3b30;
+}
+.bg-cadetblue{
+	background-color: cadetblue;
+	font-size: 12px;
+}
+.bg-green {
+    background-color: #4cd964;
+}
+.toolbar-inner > i{
+	color: #000;
+}
+
+a.link.active {
+	color: black;
+}
+.page-content{
+	background: #d3d3d3;
+	 /**background: url('../img/test2.png');**/
+}
+.page-content>.card {
+    margin-bottom: 15px;
+}
+.navbar-fixed .page>.searchbar~.page-content, .navbar-fixed>.searchbar~.page-content, .navbar-through .page>.searchbar~.page-content, .navbar-through>.searchbar~.page-content {
+    padding-top: 60px;
+}
+.content-block-inner {
+	background: #fff;
+}
+.navbar-inner, .toolbar-bottom>.toolbar-inner, .searchbar {
+ background: url('../img/texture3.png');
+ background-size: contain;
+}
+
+.icon-invisible {
+	height:26px;
+	left: -8px;
+}
+.fa-flip-vertical{
+	top: -2px;
+}
+.align-right{
+	text-align:right;
+	color: #8e8e93;
+}
+.list-block ul {
+    background: #fff;
+}
+.button-text{
+	text-align: left;
+	padding-left: 20px;
+}
+.facebook-date{
+	color: #1181FF;
+	font-size: 13px;
+	text-transform : capitalize;
+}
+.metallian{
+	background: url('../img/metallian.png') center no-repeat;
+	background-color: #000;
+}
+.calendar-custom-toolbar>.toolbar-inner{
+	background-color: #607d8b;
+}
+.span-pick-demo{
+    display: inline-block;
+    border-radius: 100%;
+    width: 20px;
+    height: 12px;
+    line-height: 36px;
+    position: relative;
+}
+.pick-demo{
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #2196f3;
+    position: absolute;
+    margin-left: -2px;
+    left: 50%;
+    bottom: 2px;
+}
+.list-index{
+	color: #000;
+}
+.button{
+	text-transform: lowercase;
+}
+.capitalize{
+	text-transform: uppercase;
+}
+.button i.icon+i.icon, .button i.icon+span, .button span:not(.ripple-wave)+i.icon, .button span:not(.ripple-wave)+span{
+	margin-left: 0px;
+}
